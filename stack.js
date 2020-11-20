@@ -1,21 +1,39 @@
 class Stack{
     constructor(){
-        let data=[]
+        this.data=[]
     }
-    push=(ele)=>{
-        data.push(ele)
+    push(ele){
+        this.data.push(ele)
     }
-    pop=()=>{
-        data.pop()
+    pop(){
+        this.data.pop()
     }
     peak(){
-        return data[0]
+        return this.data[0]
     }
     size(){
-        return data.length
+        return this.data.length
     }
     isEmpty(){
-        return data.length>0?false:true
+        return this.data.length>0?false:true
+    }
+    print(){
+        for(let i in this.data){
+            console.log(this.data[i],'<')
+        }
     }
 }
+s=new Stack()
+console.log(s.isEmpty())
+s.push('tsering')
+s.push('Norbu')
+s.push('what!')
+s.print()
+console.log(
+s.size(),
+s.peak()  
+)
+s.pop()
+s.print()
+console.log(s.isEmpty())
 
