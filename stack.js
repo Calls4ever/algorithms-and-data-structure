@@ -37,3 +37,4 @@ s.pop()
 s.print()
 console.log(s.isEmpty())
 
+module.exports=Stack
