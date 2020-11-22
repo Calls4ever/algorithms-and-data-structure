@@ -56,6 +56,19 @@ class LinkedList{
         };
         console.log(stack)
     }
+    reverse1(){
+        if(this.isEmpty()){
+            return null
+        }
+        let tempNode, currentNode=this.head, previousNode=null
+        while(currentNode){
+            tempNode=currentNode.next
+            currentNode.next=previousNode
+            previousNode=currentNode
+            currentNode=tempNode
+        }
+        this.head=previousNode
+    }
 }
 
 let l=new LinkedList()
@@ -78,4 +91,7 @@ l.add(48)
 l.add(48)
 l.print()
 l.reverse()
+l.print()
+l.reverse1()
+console.log('nothing')
 l.print()
