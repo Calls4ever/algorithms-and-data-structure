@@ -86,14 +86,41 @@ class BST{
         return false
     }
     remove(data){
-        let currentNode=this.root, leftNode, rightNode, previousNode=this.root.right
-        while(currentNode){
-            if(currentNode.data==data){
-                if(!)
+        const removeNode = function(node, data) {
+            if (node == null) {
+              return null;
             }
-        }
+            if (data == node.data) {
+              // node has no children 
+              if (node.left == null && node.right == null) {
+                return null;
+              }
+              // node has no left child 
+              if (node.left == null) {
+                return node.right;
+              }
+              // node has no right child 
+              if (node.right == null) {
+                return node.left;
+              }
+              // node has two children 
+              var tempNode = node.right;
+              while (tempNode.left !== null) {
+                tempNode = tempNode.left;
+              }
+              node.data = tempNode.data;
+              node.right = removeNode(node.right, tempNode.data);
+              return node;
+            } else if (data < node.data) {
+              node.left = removeNode(node.left, data);
+              return node;
+            } else {
+              node.right = removeNode(node.right, data);
+              return node;
+            }
+          }
+          this.root = removeNode(this.root, data);
     }
-
 }
 
 let bst=new BST()
