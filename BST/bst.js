@@ -140,6 +140,45 @@ class BST{
             return right+1
         }else return left+1
     }
+    inOder(){
+        if(!this.root){
+            return null
+        }
+        let res=[]
+       const traverseInOrder=(node)=>{
+            node.left && traverseInOrder(node.left)
+            res.push(node.data)
+            node.right && traverseInOrder(node.right)
+        }
+        traverseInOrder(this.root)
+        return res
+    }
+    postOrder(){
+        if(!this.root){
+            return null
+        }
+        let res=[]
+        const traversePostOrder=node=>{
+            node.left && traversePostOrder(node.left)
+            node.right && traversePostOrder(node.right)
+            res.push(node.data)
+        }
+        traversePostOrder(this.root)
+        return res
+    }
+    preOrder(){
+        if(!this.root){
+            return null
+        }
+        let res=[]
+        const traversePreOrder=node=>{
+            res.push(node.data)
+            node.left && traversePreOrder(node.left)
+            node.right && traversePreOrder(node.right)
+        }
+        traversePreOrder(this.root)
+        return res
+    }
 }
 
 let bst=new BST()
@@ -158,3 +197,4 @@ console.log(bst.findMin(), bst.findMax(), bst.isPresent(50))
 // bst.remove(56)
 console.log(bst)
 console.log(bst.minHeight(), bst.maxHeight())
+console.log(bst.inOder(), bst.postOrder(), bst.preOrder())
