@@ -6,6 +6,7 @@ class Node{
         this.left=left
     }
 }
+
 class BST{
     constructor(){
         this.root=null
@@ -63,10 +64,8 @@ class BST{
                 return currentNode
                 
             }else if(currentNode.data>data){
-                console.log('searching left: ', currentNode.data)
                 currentNode=currentNode.left
             }else {
-                console.log('searching right: ', currentNode.data)
                 currentNode=currentNode.right
             }
         }
@@ -86,45 +85,64 @@ class BST{
         return false
     }
     remove(data){
-        const removeNode = function(node, data) {
-            if (node == null) {
-              return null;
+        const removeNode=(data, node)=>{
+            if(!node.data){
+                return null
             }
-            if (data == node.data) {
-              // node has no children 
-              if (node.left == null && node.right == null) {
-                return null;
-              }
-              // node has no left child 
-              if (node.left == null) {
-                return node.right;
-              }
-              // node has no right child 
-              if (node.right == null) {
-                return node.left;
-              }
-              // node has two children 
-              var tempNode = node.right;
-              while (tempNode.left !== null) {
-                tempNode = tempNode.left;
-              }
-              node.data = tempNode.data;
-              node.right = removeNode(node.right, tempNode.data);
-              return node;
-            } else if (data < node.data) {
-              node.left = removeNode(node.left, data);
-              return node;
-            } else {
-              node.right = removeNode(node.right, data);
-              return node;
-            }
-          }
-          this.root = removeNode(this.root, data);
+            if(node.data==data){
+                if(!node.left && !node.right){
+                    return null
+                }
+                if(!node.right){
+                    return node.left
+                }
+                if(!node.left){
+                   return node.right
+                }
+
+                let tempNode=node.right
+                while(tempNode.left){
+                    tempNode=tempNode.left
+                }
+                node.data=tempNode.data
+                node.right=removeNode(tempNode.data, node.right)
+                return node
+            }else if(node.data>data){
+                node.left=removeNode(data, node.left)
+                return node
+            }else if(node.data<data){
+                node.right=removeNode(data, node.right)
+                return node
+            }else return node
+        }
+
+        this.root=removeNode(data, this.root)
+    }
+    minHeight(node=this.root){
+        if(!node){
+            return -1
+        }
+        let left=this.minHeight(node.left)
+        let right=this.minHeight(node.right)
+        if(left<right){
+          return  left+1
+        }else{
+          return  right+1
+        }
+    }
+    maxHeight(node=this.root){
+        if(!node){
+            return -1
+        }
+        let right=this.maxHeight(node.right)
+        let left=this.maxHeight(node.left)
+        if(left<right){
+            return right+1
+        }else return left+1
     }
 }
 
 let bst=new BST()
-console.log(bst)
 bst.add(56)
 bst.add(50)
 bst.add(53)
@@ -136,4 +154,7 @@ bst.add(57)
 bst.add("boy i missed")
 bst.add(87)
 bst.add(97)
-console.log(bst.findMin(), bst.findMax(), bst.search(87))
+console.log(bst.findMin(), bst.findMax(), bst.isPresent(50))
+// bst.remove(56)
+console.log(bst)
+console.log(bst.minHeight(), bst.maxHeight())
